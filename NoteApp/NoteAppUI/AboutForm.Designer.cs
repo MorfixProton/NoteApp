@@ -37,13 +37,15 @@ namespace NoteAppUI
             this.linkLabelEmail = new System.Windows.Forms.LinkLabel();
             this.linkLabelGitHub = new System.Windows.Forms.LinkLabel();
             this.labelCopyright = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelAboutAppName
             // 
             this.labelAboutAppName.AutoSize = true;
             this.labelAboutAppName.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelAboutAppName.Location = new System.Drawing.Point(12, 9);
+            this.labelAboutAppName.Location = new System.Drawing.Point(84, 13);
             this.labelAboutAppName.Name = "labelAboutAppName";
             this.labelAboutAppName.Size = new System.Drawing.Size(133, 32);
             this.labelAboutAppName.TabIndex = 0;
@@ -52,7 +54,7 @@ namespace NoteAppUI
             // labelAboutVersion
             // 
             this.labelAboutVersion.AutoSize = true;
-            this.labelAboutVersion.Location = new System.Drawing.Point(18, 45);
+            this.labelAboutVersion.Location = new System.Drawing.Point(87, 45);
             this.labelAboutVersion.Name = "labelAboutVersion";
             this.labelAboutVersion.Size = new System.Drawing.Size(55, 17);
             this.labelAboutVersion.TabIndex = 1;
@@ -61,7 +63,7 @@ namespace NoteAppUI
             // labelAboutAuthor
             // 
             this.labelAboutAuthor.AutoSize = true;
-            this.labelAboutAuthor.Location = new System.Drawing.Point(12, 78);
+            this.labelAboutAuthor.Location = new System.Drawing.Point(10, 108);
             this.labelAboutAuthor.Name = "labelAboutAuthor";
             this.labelAboutAuthor.Size = new System.Drawing.Size(166, 17);
             this.labelAboutAuthor.TabIndex = 2;
@@ -70,7 +72,7 @@ namespace NoteAppUI
             // labelEmail
             // 
             this.labelEmail.AutoSize = true;
-            this.labelEmail.Location = new System.Drawing.Point(12, 117);
+            this.labelEmail.Location = new System.Drawing.Point(10, 147);
             this.labelEmail.Name = "labelEmail";
             this.labelEmail.Size = new System.Drawing.Size(46, 17);
             this.labelEmail.TabIndex = 3;
@@ -79,7 +81,7 @@ namespace NoteAppUI
             // labelGitHub
             // 
             this.labelGitHub.AutoSize = true;
-            this.labelGitHub.Location = new System.Drawing.Point(12, 138);
+            this.labelGitHub.Location = new System.Drawing.Point(10, 168);
             this.labelGitHub.Name = "labelGitHub";
             this.labelGitHub.Size = new System.Drawing.Size(56, 17);
             this.labelGitHub.TabIndex = 4;
@@ -88,7 +90,7 @@ namespace NoteAppUI
             // linkLabelEmail
             // 
             this.linkLabelEmail.AutoSize = true;
-            this.linkLabelEmail.Location = new System.Drawing.Point(64, 117);
+            this.linkLabelEmail.Location = new System.Drawing.Point(62, 147);
             this.linkLabelEmail.Name = "linkLabelEmail";
             this.linkLabelEmail.Size = new System.Drawing.Size(143, 17);
             this.linkLabelEmail.TabIndex = 5;
@@ -99,7 +101,7 @@ namespace NoteAppUI
             // linkLabelGitHub
             // 
             this.linkLabelGitHub.AutoSize = true;
-            this.linkLabelGitHub.Location = new System.Drawing.Point(68, 138);
+            this.linkLabelGitHub.Location = new System.Drawing.Point(66, 168);
             this.linkLabelGitHub.Name = "linkLabelGitHub";
             this.linkLabelGitHub.Size = new System.Drawing.Size(146, 17);
             this.linkLabelGitHub.TabIndex = 6;
@@ -116,11 +118,22 @@ namespace NoteAppUI
             this.labelCopyright.TabIndex = 7;
             this.labelCopyright.Text = "2024 Nikita Tikhomirov ©";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::NoteAppUI.Properties.Resources.ImageNote64;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(13, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(65, 71);
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(382, 253);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.labelCopyright);
             this.Controls.Add(this.linkLabelGitHub);
             this.Controls.Add(this.linkLabelEmail);
@@ -135,6 +148,7 @@ namespace NoteAppUI
             this.Name = "AboutForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,5 +164,6 @@ namespace NoteAppUI
         private System.Windows.Forms.LinkLabel linkLabelEmail;
         private System.Windows.Forms.LinkLabel linkLabelGitHub;
         private System.Windows.Forms.Label labelCopyright;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -74,6 +74,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -87,6 +88,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ImageNoteAdd32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ImageNoteAdd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ImageNoteEdit32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ImageNoteDelete32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ImageNote64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
