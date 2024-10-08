@@ -81,7 +81,7 @@ namespace NoteAppUI
             // labelCreated
             // 
             this.labelCreated.AutoSize = true;
-            this.labelCreated.Location = new System.Drawing.Point(12, 81);
+            this.labelCreated.Location = new System.Drawing.Point(12, 76);
             this.labelCreated.Name = "labelCreated";
             this.labelCreated.Size = new System.Drawing.Size(62, 17);
             this.labelCreated.TabIndex = 4;
@@ -89,7 +89,7 @@ namespace NoteAppUI
             // 
             // dateTimePickerCreated
             // 
-            this.dateTimePickerCreated.Location = new System.Drawing.Point(87, 76);
+            this.dateTimePickerCreated.Location = new System.Drawing.Point(87, 71);
             this.dateTimePickerCreated.Name = "dateTimePickerCreated";
             this.dateTimePickerCreated.Size = new System.Drawing.Size(200, 22);
             this.dateTimePickerCreated.TabIndex = 5;
