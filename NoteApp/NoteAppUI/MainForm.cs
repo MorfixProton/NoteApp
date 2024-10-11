@@ -13,6 +13,8 @@ namespace NoteAppUI
 {
     public partial class MainForm : Form
     {
+        private Guid ID;
+
         public MainForm()
         {
             InitializeComponent();
@@ -43,13 +45,17 @@ namespace NoteAppUI
             RefreshList();
         }
 
-        private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void RefreshList()
         {
+            editNoteToolStripMenuItem.Enabled = false;
+            removeNoteToolStripMenuItem.Enabled = false;
+            buttonEditNote.Enabled = false;
+            buttonDeleteNote.Enabled = false;
+
+            labelName.Text = "";
+            labelCategory.Text = "";
+            richTextBox1.Text = "";
+
             listViewNotes.Items.Clear();
 
             var notes = Project.GetNotes();
@@ -71,7 +77,7 @@ namespace NoteAppUI
             }
             else
             {
-                Guid ID = (Guid) listViewNotes.SelectedItems[0].Tag;
+                ID = (Guid) listViewNotes.SelectedItems[0].Tag;
                 Note note = Project.GetNote(ID);
 
                 labelName.Text = note.Name;
@@ -85,6 +91,36 @@ namespace NoteAppUI
                 editNoteToolStripMenuItem.Enabled = true;
                 removeNoteToolStripMenuItem.Enabled = true;
             }
+        }
+
+        private void buttonDeleteNote_Click(object sender, EventArgs e)
+        {
+            Project.DeleteNote(ID);
+            MessageBox.Show("Заметка удалена!");
+            RefreshList();
+        }
+
+        private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Project.DeleteNote(ID);
+            MessageBox.Show("Заметка удалена!");
+            RefreshList();
+        }
+
+        private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditForm editForm = new EditForm();
+            editForm.SetValues(ID);
+            editForm.ShowDialog();
+            RefreshList();
+        }
+
+        private void buttonEditNote_Click(object sender, EventArgs e)
+        {
+            EditForm editForm = new EditForm();
+            editForm.SetValues(ID);
+            editForm.ShowDialog();
+            RefreshList();
         }
     }
 }
