@@ -95,16 +95,30 @@ namespace NoteAppUI
 
         private void buttonDeleteNote_Click(object sender, EventArgs e)
         {
-            Project.DeleteNote(ID);
-            MessageBox.Show("Заметка удалена!");
-            RefreshList();
+            DialogResult dialogResult = MessageBox.Show("Вы уверены, что хотите удалить заметку?", "Удаление заметки", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Project.DeleteNote(ID);
+                RefreshList();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                
+            }
         }
 
         private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Project.DeleteNote(ID);
-            MessageBox.Show("Заметка удалена!");
-            RefreshList();
+            DialogResult dialogResult = MessageBox.Show("Вы уверены, что хотите удалить заметку?", "Удаление заметки", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Project.DeleteNote(ID);
+                RefreshList();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+
+            }
         }
 
         private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)

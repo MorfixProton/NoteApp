@@ -70,6 +70,7 @@ namespace NoteAppUI
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(683, 22);
             this.textBoxTitle.TabIndex = 2;
+            this.textBoxTitle.Text = "Без названия";
             // 
             // comboBoxCategory
             // 
