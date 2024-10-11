@@ -113,5 +113,11 @@
   <ItemGroup>
     <None Include="Resources\ImageNote64.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NoteApp\NoteApp.csproj">
+      <Project>{0451c994-13a6-493e-8bf4-1db1c0362b1f}</Project>
+      <Name>NoteApp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
