@@ -13,11 +13,18 @@ namespace NoteAppUI
 {
     public partial class MainForm : Form
     {
-        private Guid ID;
+        private Guid GUID;
 
         public MainForm()
         {
             InitializeComponent();
+
+            comboBoxCategory.Items.Add("All");
+
+            foreach (Categories categories in Enum.GetValues(typeof(Categories)))
+            {
+                comboBoxCategory.Items.Add(new ComboBoxItem<Categories>(CategoryName.GetName(categories), categories));
+            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -58,7 +65,17 @@ namespace NoteAppUI
 
             listViewNotes.Items.Clear();
 
-            var notes = Project.GetNotes();
+            List<Note> notes;
+
+            if (comboBoxCategory.SelectedItem is ComboBoxItem<Categories>)
+            {
+                notes = Project.GetSortedNotes(((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value);
+            }
+            else
+            {
+                notes = Project.GetSortedNotes();
+            }
+
             foreach (var Note in notes)
             {
                 listViewNotes.Items.Add(new ListViewItem(Note.Name) { Tag = Note.ID });
@@ -77,11 +94,11 @@ namespace NoteAppUI
             }
             else
             {
-                ID = (Guid) listViewNotes.SelectedItems[0].Tag;
-                Note note = Project.GetNote(ID);
+                GUID = (Guid) listViewNotes.SelectedItems[0].Tag;
+                Note note = Project.GetNote(GUID);
 
                 labelName.Text = note.Name;
-                labelCategory.Text = note.Category;
+                labelCategory.Text = CategoryName.GetName(note.Category);
                 richTextBox1.Text = note.Content;
                 dateTimePickerCreated.Value = note.DateCreate;
                 dateTimePickerModified.Value = note.DateModified;
@@ -95,10 +112,10 @@ namespace NoteAppUI
 
         private void buttonDeleteNote_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Вы уверены, что хотите удалить заметку?", "Удаление заметки", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + Project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                Project.DeleteNote(ID);
+                Project.DeleteNote(GUID);
                 RefreshList();
             }
             else if (dialogResult == DialogResult.No)
@@ -109,10 +126,10 @@ namespace NoteAppUI
 
         private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Вы уверены, что хотите удалить заметку?", "Удаление заметки", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + Project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                Project.DeleteNote(ID);
+                Project.DeleteNote(GUID);
                 RefreshList();
             }
             else if (dialogResult == DialogResult.No)
@@ -124,16 +141,27 @@ namespace NoteAppUI
         private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditForm editForm = new EditForm();
-            editForm.SetValues(ID);
+            editForm.SetValues(GUID);
             editForm.ShowDialog();
             RefreshList();
+            var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == GUID);
+            item.Selected = true;
+            listViewNotes.Select();
         }
 
         private void buttonEditNote_Click(object sender, EventArgs e)
         {
             EditForm editForm = new EditForm();
-            editForm.SetValues(ID);
+            editForm.SetValues(GUID);
             editForm.ShowDialog();
+            RefreshList();
+            var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == GUID);
+            item.Selected = true;
+            listViewNotes.Select();
+        }
+
+        private void comboBoxCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
             RefreshList();
         }
     }

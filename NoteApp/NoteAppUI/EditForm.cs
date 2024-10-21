@@ -18,42 +18,46 @@ namespace NoteAppUI
         public EditForm()
         {
             InitializeComponent();
-            comboBoxCategory.Items.Add("Работа");
-            comboBoxCategory.Items.Add("Дом");
-            comboBoxCategory.Items.Add("Здоровье и Спорт");
-            comboBoxCategory.Items.Add("Люди");
-            comboBoxCategory.Items.Add("Документы");
-            comboBoxCategory.Items.Add("Финансы");
-            comboBoxCategory.Items.Add("Разное");
+
+            foreach(Categories categories in Enum.GetValues(typeof(Categories)))
+            {
+                comboBoxCategory.Items.Add(new ComboBoxItem<Categories>(CategoryName.GetName(categories), categories));
+            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (textBoxTitle.Text == "")
             {
-                MessageBox.Show("Нет названия заметки!");
+                MessageBox.Show("There is no title of the note!");
             }
             else
             {
                 if (comboBoxCategory.Text == "")
                 {
-                    MessageBox.Show("Не выбрана категория!");
+                    MessageBox.Show("No category selected!");
                 }
                 else
                 {
-                    var notes = Project.GetNotes();
-
-                    if (notes.FirstOrDefault(x => x.ID == noteID) == null)
+                    if (textBoxTitle.Text.Length > 50)
                     {
-                        Project.AddNote(textBoxTitle.Text, comboBoxCategory.Text, richTextBoxContent.Text);
+                        MessageBox.Show("The name of the note cannot exceed 50 characters!");
                     }
                     else
                     {
-                        Project.EditNote(noteID, textBoxTitle.Text, comboBoxCategory.Text, richTextBoxContent.Text);
+                        var notes = Project.GetNotes();
+
+                        if (notes.FirstOrDefault(x => x.ID == noteID) == null)
+                        {
+                            Project.AddNote(textBoxTitle.Text, ((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value, richTextBoxContent.Text);
+                        }
+                        else
+                        {
+                            Project.EditNote(noteID, textBoxTitle.Text, ((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value, richTextBoxContent.Text);
+                        }
+
+                        Close();
                     }
-
-
-                    Close();
                 }
             }
         }
@@ -68,7 +72,7 @@ namespace NoteAppUI
             noteID = ID;
             Note note = Project.GetNote(ID);
             textBoxTitle.Text = note.Name;
-            comboBoxCategory.Text = note.Category;
+            comboBoxCategory.Text = CategoryName.GetName(note.Category);
             dateTimePickerCreated.Value = note.DateCreate;
             note.DateModified = DateTime.Now;
             dateTimePickerModified.Value = note.DateModified;

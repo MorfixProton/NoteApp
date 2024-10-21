@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace NoteApp
 {
+
+
     public static class Project
     {
         private static List<Note> notes = new List<Note>();
@@ -13,7 +15,7 @@ namespace NoteApp
         /// <summary>
         /// Создать заметку и сохранить ее в notes
         /// </summary>
-        public static void AddNote(string name, string category, string content)
+        public static void AddNote(string name, Categories category, string content)
         {
             Note note = new Note();
 
@@ -38,7 +40,7 @@ namespace NoteApp
         /// <summary>
         /// Редактировать заметку по уникальному GUID
         /// </summary>
-        public static void EditNote(Guid ID, string name, string category, string content)
+        public static void EditNote(Guid ID, string name, Categories category, string content)
         {
             Note note = notes.FirstOrDefault(x => x.ID == ID);//Найти все, с заданным ID
 
@@ -54,17 +56,7 @@ namespace NoteApp
         public static Note GetNote(Guid ID)
         {
             Note note = notes.FirstOrDefault(x => x.ID == ID);//Найти все, с заданным ID
-            Note cloneNote = new Note
-            {
-
-                //Для того, чтобы другой объект не получил доступ непосредственно к notes (для сохранения инкапсуляции)
-                ID = note.ID,
-                Name = note.Name,
-                Category = note.Category,
-                Content = note.Content,
-                DateCreate = note.DateCreate,
-                DateModified = note.DateModified
-            };
+            Note cloneNote = (Note)note.Clone();
 
             return cloneNote;
         }
@@ -74,16 +66,33 @@ namespace NoteApp
         /// </summary>
         public static List<Note> GetNotes()
         {
-            return notes.Select(note => new Note
-            {
-                //Для того, чтобы другой объект не получил доступ непосредственно к notes (для сохранения инкапсуляции)
-                ID = note.ID,
-                Name = note.Name,
-                Category = note.Category,
-                Content = note.Content,
-                DateCreate = note.DateCreate,
-                DateModified = note.DateModified
-            }).ToList();
+            return notes.Select(note => (Note)note.Clone()).ToList();
+        }
+
+        /// <summary>
+        /// Получить имя заметки по GUID
+        /// </summary>
+        public static string GetNoteName(Guid ID)
+        {
+            Note note = notes.FirstOrDefault(x => x.ID == ID);//Найти все, с заданным ID
+
+            return note.Name;
+        }
+
+        /// <summary>
+        /// Сортировать заметки по дате
+        /// </summary>
+        public static List<Note> GetSortedNotes()
+        {
+            return notes.Select(note => (Note)note.Clone()).OrderByDescending(x => x.DateModified).ToList();
+        }
+
+        /// <summary>
+        /// Сортировать заметки по дате и фильтрация категории
+        /// </summary>
+        public static List<Note> GetSortedNotes(Categories category)
+        {
+            return notes.Where(x => x.Category == category).Select(note => (Note)note.Clone()).OrderByDescending(x => x.DateModified).ToList();
         }
     }
 }
