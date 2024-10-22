@@ -15,7 +15,9 @@ namespace NoteAppUI
     {
         private Guid noteID;
 
-        public EditForm()
+        private Project project;
+
+        public EditForm(Project project)
         {
             InitializeComponent();
 
@@ -23,6 +25,8 @@ namespace NoteAppUI
             {
                 comboBoxCategory.Items.Add(new ComboBoxItem<Categories>(CategoryName.GetName(categories), categories));
             }
+
+            this.project = project;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -45,15 +49,15 @@ namespace NoteAppUI
                     }
                     else
                     {
-                        var notes = Project.GetNotes();
+                        var notes = project.GetNotes();
 
                         if (notes.FirstOrDefault(x => x.ID == noteID) == null)
                         {
-                            Project.AddNote(textBoxTitle.Text, ((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value, richTextBoxContent.Text);
+                            project.AddNote(textBoxTitle.Text, ((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value, richTextBoxContent.Text);
                         }
                         else
                         {
-                            Project.EditNote(noteID, textBoxTitle.Text, ((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value, richTextBoxContent.Text);
+                            project.EditNote(noteID, textBoxTitle.Text, ((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value, richTextBoxContent.Text);
                         }
 
                         Close();
@@ -70,7 +74,7 @@ namespace NoteAppUI
         public void SetValues(Guid ID)
         {
             noteID = ID;
-            Note note = Project.GetNote(ID);
+            Note note = project.GetNote(ID);
             textBoxTitle.Text = note.Name;
             comboBoxCategory.Text = CategoryName.GetName(note.Category);
             dateTimePickerCreated.Value = note.DateCreate;

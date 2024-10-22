@@ -148,7 +148,7 @@ namespace NoteAppUI
             this.comboBoxCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCategory.FormattingEnabled = true;
             this.comboBoxCategory.Location = new System.Drawing.Point(92, 32);
-            this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxCategory.Name = "comboBoxCategory";
             this.comboBoxCategory.Size = new System.Drawing.Size(153, 21);
             this.comboBoxCategory.TabIndex = 2;
@@ -161,7 +161,7 @@ namespace NoteAppUI
             this.buttonDeleteNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.buttonDeleteNote.Enabled = false;
             this.buttonDeleteNote.Location = new System.Drawing.Point(78, 410);
-            this.buttonDeleteNote.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonDeleteNote.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDeleteNote.Name = "buttonDeleteNote";
             this.buttonDeleteNote.Size = new System.Drawing.Size(30, 32);
             this.buttonDeleteNote.TabIndex = 6;
@@ -175,7 +175,7 @@ namespace NoteAppUI
             this.buttonEditNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.buttonEditNote.Enabled = false;
             this.buttonEditNote.Location = new System.Drawing.Point(44, 410);
-            this.buttonEditNote.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonEditNote.Margin = new System.Windows.Forms.Padding(2);
             this.buttonEditNote.Name = "buttonEditNote";
             this.buttonEditNote.Size = new System.Drawing.Size(30, 32);
             this.buttonEditNote.TabIndex = 5;
@@ -188,7 +188,7 @@ namespace NoteAppUI
             this.buttonAddNote.BackgroundImage = global::NoteAppUI.Properties.Resources.ImageNoteAdd32;
             this.buttonAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.buttonAddNote.Location = new System.Drawing.Point(9, 410);
-            this.buttonAddNote.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonAddNote.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddNote.Name = "buttonAddNote";
             this.buttonAddNote.Size = new System.Drawing.Size(30, 32);
             this.buttonAddNote.TabIndex = 4;
@@ -240,7 +240,7 @@ namespace NoteAppUI
             // 
             this.dateTimePickerCreated.Enabled = false;
             this.dateTimePickerCreated.Location = new System.Drawing.Point(302, 78);
-            this.dateTimePickerCreated.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateTimePickerCreated.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePickerCreated.Name = "dateTimePickerCreated";
             this.dateTimePickerCreated.Size = new System.Drawing.Size(151, 20);
             this.dateTimePickerCreated.TabIndex = 11;
@@ -259,7 +259,7 @@ namespace NoteAppUI
             // 
             this.dateTimePickerModified.Enabled = false;
             this.dateTimePickerModified.Location = new System.Drawing.Point(510, 78);
-            this.dateTimePickerModified.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateTimePickerModified.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePickerModified.Name = "dateTimePickerModified";
             this.dateTimePickerModified.Size = new System.Drawing.Size(151, 20);
             this.dateTimePickerModified.TabIndex = 13;
@@ -270,7 +270,7 @@ namespace NoteAppUI
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.Location = new System.Drawing.Point(254, 101);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(477, 342);
@@ -290,6 +290,7 @@ namespace NoteAppUI
             this.listViewNotes.UseCompatibleStateImageBehavior = false;
             this.listViewNotes.View = System.Windows.Forms.View.List;
             this.listViewNotes.SelectedIndexChanged += new System.EventHandler(this.listViewNotes_SelectedIndexChanged);
+            this.listViewNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             // 
             // MainForm
             // 
@@ -313,10 +314,11 @@ namespace NoteAppUI
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(686, 421);
             this.Name = "MainForm";
             this.Text = "NoteApp";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

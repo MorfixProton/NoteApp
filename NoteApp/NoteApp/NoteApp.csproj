@@ -47,6 +47,7 @@
     <Compile Include="Categories.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Note.cs" />
+    <Compile Include="ProjectManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

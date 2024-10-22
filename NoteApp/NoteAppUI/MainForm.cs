@@ -15,6 +15,8 @@ namespace NoteAppUI
     {
         private Guid GUID;
 
+        private Project project;
+
         public MainForm()
         {
             InitializeComponent();
@@ -25,6 +27,9 @@ namespace NoteAppUI
             {
                 comboBoxCategory.Items.Add(new ComboBoxItem<Categories>(CategoryName.GetName(categories), categories));
             }
+
+            project = ProjectManager.LoadFromFile();
+            RefreshList();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -40,15 +45,17 @@ namespace NoteAppUI
 
         private void addNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EditForm editForm = new EditForm();
+            EditForm editForm = new EditForm(project);
             editForm.ShowDialog();
+            ProjectManager.SaveToFile(project);
             RefreshList();
         }
 
         private void buttonAddNote_Click(object sender, EventArgs e)
         {
-            EditForm editForm = new EditForm();
+            EditForm editForm = new EditForm(project);
             editForm.ShowDialog();
+            ProjectManager.SaveToFile(project);
             RefreshList();
         }
 
@@ -69,11 +76,11 @@ namespace NoteAppUI
 
             if (comboBoxCategory.SelectedItem is ComboBoxItem<Categories>)
             {
-                notes = Project.GetSortedNotes(((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value);
+                notes = project.GetSortedNotes(((ComboBoxItem<Categories>)comboBoxCategory.SelectedItem).Value);
             }
             else
             {
-                notes = Project.GetSortedNotes();
+                notes = project.GetSortedNotes();
             }
 
             foreach (var Note in notes)
@@ -95,7 +102,7 @@ namespace NoteAppUI
             else
             {
                 GUID = (Guid) listViewNotes.SelectedItems[0].Tag;
-                Note note = Project.GetNote(GUID);
+                Note note = project.GetNote(GUID);
 
                 labelName.Text = note.Name;
                 labelCategory.Text = CategoryName.GetName(note.Category);
@@ -112,10 +119,11 @@ namespace NoteAppUI
 
         private void buttonDeleteNote_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + Project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                Project.DeleteNote(GUID);
+                project.DeleteNote(GUID);
+                ProjectManager.SaveToFile(project);
                 RefreshList();
             }
             else if (dialogResult == DialogResult.No)
@@ -126,10 +134,11 @@ namespace NoteAppUI
 
         private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + Project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                Project.DeleteNote(GUID);
+                project.DeleteNote(GUID);
+                ProjectManager.SaveToFile(project);
                 RefreshList();
             }
             else if (dialogResult == DialogResult.No)
@@ -140,9 +149,10 @@ namespace NoteAppUI
 
         private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EditForm editForm = new EditForm();
+            EditForm editForm = new EditForm(project);
             editForm.SetValues(GUID);
             editForm.ShowDialog();
+            ProjectManager.SaveToFile(project);
             RefreshList();
             var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == GUID);
             item.Selected = true;
@@ -151,9 +161,10 @@ namespace NoteAppUI
 
         private void buttonEditNote_Click(object sender, EventArgs e)
         {
-            EditForm editForm = new EditForm();
+            EditForm editForm = new EditForm(project);
             editForm.SetValues(GUID);
             editForm.ShowDialog();
+            ProjectManager.SaveToFile(project);
             RefreshList();
             var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == GUID);
             item.Selected = true;
@@ -163,6 +174,32 @@ namespace NoteAppUI
         private void comboBoxCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshList();
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (buttonDeleteNote.Enabled)
+                {
+                    DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        project.DeleteNote(GUID);
+                        ProjectManager.SaveToFile(project);
+                        RefreshList();
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+
+                    }
+                }
+            }  
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ProjectManager.SaveToFile(project);
         }
     }
 }

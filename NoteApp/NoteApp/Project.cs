@@ -1,21 +1,23 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace NoteApp
 {
 
 
-    public static class Project
+    public class Project
     {
-        private static List<Note> notes = new List<Note>();
+        [JsonProperty]public List<Note> notes = new List<Note>();
 
         /// <summary>
         /// Создать заметку и сохранить ее в notes
         /// </summary>
-        public static void AddNote(string name, Categories category, string content)
+        public void AddNote(string name, Categories category, string content)
         {
             Note note = new Note();
 
@@ -32,7 +34,7 @@ namespace NoteApp
         /// <summary>
         /// Удалить заметку по уникальному GUID
         /// </summary>
-        public static void DeleteNote(Guid ID)
+        public void DeleteNote(Guid ID)
         {
             notes.RemoveAll(x => x.ID == ID);//Найти и ликвидировать все, с заданным ID
         }
@@ -40,7 +42,7 @@ namespace NoteApp
         /// <summary>
         /// Редактировать заметку по уникальному GUID
         /// </summary>
-        public static void EditNote(Guid ID, string name, Categories category, string content)
+        public void EditNote(Guid ID, string name, Categories category, string content)
         {
             Note note = notes.FirstOrDefault(x => x.ID == ID);//Найти все, с заданным ID
 
@@ -53,7 +55,7 @@ namespace NoteApp
         /// <summary>
         /// Получить заметку из notes
         /// </summary>
-        public static Note GetNote(Guid ID)
+        public Note GetNote(Guid ID)
         {
             Note note = notes.FirstOrDefault(x => x.ID == ID);//Найти все, с заданным ID
             Note cloneNote = (Note)note.Clone();
@@ -64,7 +66,7 @@ namespace NoteApp
         /// <summary>
         /// Получить полный список notes
         /// </summary>
-        public static List<Note> GetNotes()
+        public List<Note> GetNotes()
         {
             return notes.Select(note => (Note)note.Clone()).ToList();
         }
@@ -72,7 +74,7 @@ namespace NoteApp
         /// <summary>
         /// Получить имя заметки по GUID
         /// </summary>
-        public static string GetNoteName(Guid ID)
+        public string GetNoteName(Guid ID)
         {
             Note note = notes.FirstOrDefault(x => x.ID == ID);//Найти все, с заданным ID
 
@@ -82,7 +84,7 @@ namespace NoteApp
         /// <summary>
         /// Сортировать заметки по дате
         /// </summary>
-        public static List<Note> GetSortedNotes()
+        public List<Note> GetSortedNotes()
         {
             return notes.Select(note => (Note)note.Clone()).OrderByDescending(x => x.DateModified).ToList();
         }
@@ -90,7 +92,7 @@ namespace NoteApp
         /// <summary>
         /// Сортировать заметки по дате и фильтрация категории
         /// </summary>
-        public static List<Note> GetSortedNotes(Categories category)
+        public List<Note> GetSortedNotes(Categories category)
         {
             return notes.Where(x => x.Category == category).Select(note => (Note)note.Clone()).OrderByDescending(x => x.DateModified).ToList();
         }
