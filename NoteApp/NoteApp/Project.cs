@@ -12,7 +12,8 @@ namespace NoteApp
 
     public class Project
     {
-        [JsonProperty]public List<Note> notes = new List<Note>();
+        [JsonProperty]private List<Note> notes = new List<Note>();
+        public Guid LastNote;
 
         /// <summary>
         /// Создать заметку и сохранить ее в notes

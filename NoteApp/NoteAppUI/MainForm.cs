@@ -13,8 +13,6 @@ namespace NoteAppUI
 {
     public partial class MainForm : Form
     {
-        private Guid GUID;
-
         private Project project;
 
         public MainForm()
@@ -30,6 +28,14 @@ namespace NoteAppUI
 
             project = ProjectManager.LoadFromFile();
             RefreshList();
+
+            
+            var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == project.LastNote);
+            if (item != null)
+            {
+                item.Selected = true;
+                listViewNotes.Select();
+            }  
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -101,8 +107,8 @@ namespace NoteAppUI
             }
             else
             {
-                GUID = (Guid) listViewNotes.SelectedItems[0].Tag;
-                Note note = project.GetNote(GUID);
+                project.LastNote = (Guid) listViewNotes.SelectedItems[0].Tag;
+                Note note = project.GetNote(project.LastNote);
 
                 labelName.Text = note.Name;
                 labelCategory.Text = CategoryName.GetName(note.Category);
@@ -114,15 +120,17 @@ namespace NoteAppUI
                 buttonDeleteNote.Enabled = true;
                 editNoteToolStripMenuItem.Enabled = true;
                 removeNoteToolStripMenuItem.Enabled = true;
+
+                ProjectManager.SaveToFile(project);
             }
         }
 
         private void buttonDeleteNote_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(project.LastNote), "Delete a note", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                project.DeleteNote(GUID);
+                project.DeleteNote(project.LastNote);
                 ProjectManager.SaveToFile(project);
                 RefreshList();
             }
@@ -134,10 +142,10 @@ namespace NoteAppUI
 
         private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(project.LastNote), "Delete a note", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                project.DeleteNote(GUID);
+                project.DeleteNote(project.LastNote);
                 ProjectManager.SaveToFile(project);
                 RefreshList();
             }
@@ -150,11 +158,11 @@ namespace NoteAppUI
         private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditForm editForm = new EditForm(project);
-            editForm.SetValues(GUID);
+            editForm.SetValues(project.LastNote);
             editForm.ShowDialog();
             ProjectManager.SaveToFile(project);
             RefreshList();
-            var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == GUID);
+            var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == project.LastNote);
             item.Selected = true;
             listViewNotes.Select();
         }
@@ -162,11 +170,11 @@ namespace NoteAppUI
         private void buttonEditNote_Click(object sender, EventArgs e)
         {
             EditForm editForm = new EditForm(project);
-            editForm.SetValues(GUID);
+            editForm.SetValues(project.LastNote);
             editForm.ShowDialog();
             ProjectManager.SaveToFile(project);
             RefreshList();
-            var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == GUID);
+            var item = listViewNotes.Items.OfType<ListViewItem>().FirstOrDefault(x => (Guid)x.Tag == project.LastNote);
             item.Selected = true;
             listViewNotes.Select();
         }
@@ -182,10 +190,10 @@ namespace NoteAppUI
             {
                 if (buttonDeleteNote.Enabled)
                 {
-                    DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(GUID), "Delete a note", MessageBoxButtons.YesNo);
+                    DialogResult dialogResult = MessageBox.Show("Do you really want to remove this note: " + project.GetNoteName(project.LastNote), "Delete a note", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
                     {
-                        project.DeleteNote(GUID);
+                        project.DeleteNote(project.LastNote);
                         ProjectManager.SaveToFile(project);
                         RefreshList();
                     }
