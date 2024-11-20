@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteAppUI", "NoteAppUI\Note
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteApp", "NoteApp\NoteApp.csproj", "{0451C994-13A6-493E-8BF4-1DB1C0362B1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteApp.UnitTest", "NoteApp.UnitTest\NoteApp.UnitTest.csproj", "{09B22A1C-2DE7-4474-8006-F576D9B6F68F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install", "Install", "{2594021E-F7DE-4CE1-A452-4F4C305280D7}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Desktop\111.iss = ..\..\..\..\Desktop\111.iss
+		..\..\..\..\Desktop\NoteAppSetup.exe = ..\..\..\..\Desktop\NoteAppSetup.exe
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +29,10 @@ Global
 		{0451C994-13A6-493E-8BF4-1DB1C0362B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0451C994-13A6-493E-8BF4-1DB1C0362B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0451C994-13A6-493E-8BF4-1DB1C0362B1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B22A1C-2DE7-4474-8006-F576D9B6F68F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B22A1C-2DE7-4474-8006-F576D9B6F68F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B22A1C-2DE7-4474-8006-F576D9B6F68F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B22A1C-2DE7-4474-8006-F576D9B6F68F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
